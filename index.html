@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="City of Philadelphia | Data Services">
     <title>City of Philadelphia | Budget Explorer</title>
-    <link rel="shortcut icon" href="">
+    <link rel="shortcut icon" href="index.html">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/yeti/bootstrap.min.css">
 <!--    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
 <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">-->
@@ -42,60 +42,34 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
 <!--                    <li><a href="#contact">Data Inventory</a></li>-->
-
                 </ul>
             </div><!--.nav-collapse-->
         </div>
     </nav>
-
     <div class="container">
         <div id="budget-header">
             <img src="img/new_city_logo_grey.png" alt="city logo" class="logo-img">
             <p><span class="city-title">Open Budget  </span><span class="app-name">Explorer</span></p>
 <!--                <p class="lead">This little guy is just a test. Select a department to see how their budget breaks down.</p>-->
         </div>
-        <div>
-<!--
-            <svg height="20" width="100%">
-                <line x1="100" y1="2" x2="100%" y2="2" style="stroke:#333;stroke-width:0.5" />
-                        Sorry, your browser does not support inline SVG.
-            </svg>
--->
-        </div>
 
 <!--    BEGIN VISUALIZATION MAIN    -->
         <div class="row" id="info">
         <div id="data-count-top">
             <span class="filter-count"></span> selected out of <span class="total-count"></span> records &nbsp;
-            <span id="reset-all">
-                <button type="button" class="btn btn-primary btn-xs"><a href="javascript:dc.filterAll();dc.redrawAll();">Reset Filters</a></button>
-            </span>
         </div>
             <div class="col-xs-12"><hr></div>
             <div class="col-xs-4">
-                <div class="summary">
-<!--
-                    <svg height="10" width="100%">
-                        <line x1="0" y1="1" x2="100%" y2="1" style="stroke:#666;stroke-width:1" />
-                        Sorry, your browser does not support inline SVG.
-                    </svg>
--->
+                <div class="dept-title">Total Selected<hr>
+                </div>
+                <div style="text-align: center;">
+                    <div id="chart-number-total">
+                        <span style="number-display"></span>
+                    </div>
                     <div>
-                        <div id="chart-number-total">
-                            <span class="total-selected">Total Selected<hr></span>
-                            <span style="number-display"><br></span>
-                        </div>
-                        <div>
-                            <span class="">of</span><br>
-                            <span style class="budget-total">$7,186,474,597</span><br>
+                        <div style="text-align: center;">of</div>
+                        <span style class="budget-total">$7,186,474,597</span><br>
 <!--                            <span class="total-selected">total</span>-->
-                        </div>
-<!--
-                    <svg height="10" width="100%">
-                        <line x1="0" y1="10" x2="100%" y2="10" style="stroke:#666;stroke-width:1" />
-                        Sorry, your browser does not support inline SVG.
-                    </svg>
--->
                     </div>
                 </div>
             </div>
@@ -109,38 +83,37 @@
                 <section class="dept-title" id="filters">Director of Finance</section>
                 <hr>
                 <p class="description">Overseeing the financial, accounting, and budgeting functions of the executive branch. <em>(this will update as dept is selected.)</em></p>
-
             </div>
         </div>
         <div id="row-charts" class="row">
             <div id="department" class="col-xs-4">
+                <hr><p span class="section-title">Choose a Department <span class="glyphicon glyphicon-question-sign"></span><hr>
+                </p>
                 <section id="chart-row-dept">
-                    <p span class="section-title">Choose a Department</p>
-                    <hr>
                 </section>
             </div>
             <div id="funding" class="col-xs-4">
-                <section id="chart-row-fund">
-                    <p span class="section-title">View by Funding Source</p>
+                <section id="chart-row-fund"><hr>
+                    <p span class="section-title">Funding Source <span class="glyphicon glyphicon-question-sign"></span></p>
                     <hr>
                 </section>
             </div>
             <div id="category" class="col-xs-4">
-                <section id="chart-bar-char">
-                    <p span class="section-title">Select a Category</p>
+                <section id="chart-bar-char"><hr>
+                    <p span class="section-title">Category <span class="glyphicon glyphicon-question-sign"></span></p>
                     <hr>
                 </section>
             </div>
         </div>
      <!-- create a custom header -->
-         <div id="data-table" class="row">
-                <section id="data-count">
-                    <span class="filter-count"></span> selected out of </span>
-                    <span class="total-count"></span> records
-                </section>
-             <p span class="section-title">Sub-Category Items (determined by selections above):</p>
-             <hr>
-             <table class="table table-hover table-striped table-condensed" id="chart-table-activity">
+        <div id="data-table" class="row">
+            <section id="data-count">
+                <span class="filter-count"></span> selected out of </span>
+                <span class="total-count"></span> records
+            </section>
+            <p span class="section-title">Sub-Category Items (determined by selections above):</p>
+            <hr>
+            <table class="table table-hover table-striped" id="chart-table-activity">
                 <thead>
                 <tr class="header">
                     <th>Department</th>
@@ -175,7 +148,7 @@
 
         var myData = d3.csv('data/14budget.csv', function(budgetData){
 //            var numberFormat = d3.format(' ^$,.r');
-            console.log(budgetData);
+//            console.log(budgetData);
         // normalize/parse data
     //        budgetData.forEach(function(d) {
     //            d.Spent = d.Spent.match(/\d+/);
@@ -184,7 +157,7 @@
     // SET CROSSFILTER
         var ndx = crossfilter(budgetData),
 
-//            totalDim = ndx.dimension(function(d) {return d.total;}),
+//          totalDim            = ndx.dimension(function(d) {return d.total;}),
             all                 = ndx.groupAll(),
             sumAll              = ndx.groupAll().reduceSum(function(d) {return +d.budget}),
 
@@ -209,8 +182,6 @@
             console.log(min);
             console.log(max);
 
-
-
             //TODO dynamic dept title renderal
             //TODO calc % YoY change
             numberTotal
@@ -232,7 +203,7 @@
                 .innerRadius(70);
 
             deptRowChart
-                .width(370).height(900)
+                .width(340).height(900)
                 .dimension(deptDim)
                 .colors(['#008cba'])
 //                .x(d3.scale.log())
@@ -248,7 +219,7 @@
                 .labelOffsetY([12]);
 
             charBarChart
-                .width(380).height(450)
+                .width(340).height(450)
                 .dimension(charDim)
                 .group(spendPerCharDim)
                 .colors(['#008cba'])
@@ -259,7 +230,7 @@
                 .gap(3);
 
             fundRowChart
-                .width(380).height(450)
+                .width(340).height(450)
                 .dimension(fundDim)
                 .group(spendPerFundDim)
                 .colors(['#008cba'])
@@ -298,6 +269,5 @@
                 .order(d3.ascending);
             dc.renderAll();
         });
-
     </script>
 </body>

@@ -10,6 +10,14 @@ p {
     color: #54585A;
 }
 
+ul, ol {
+    font-family: 'open sans', sans-serif;
+}
+
+ol {
+    font-weight:bold
+}
+
 .blue {
     color: #008cba!important;
 }
@@ -34,7 +42,7 @@ p {
 /*    border: 1px dotted #d9d9d6; */
 }
 
-.navbar-brand{
+.navbar-brand {
     text-transform: uppercase;
     letter-spacing: 4px;
     font-size: 16px;
@@ -50,7 +58,9 @@ p {
 /*    text-transform: uppercase;*/
     font-family: 'georgia',serif;
     font-size: 22px;
+    margin-top: -20px;
     margin-bottom: -20px;
+
     color: #54585A;
 }
 
@@ -164,6 +174,7 @@ a:visited {
 }
 
 tr.header {
+    font-family: 'open sans', sans-serif;
     font-size: 20px;
     color: #54585A;
 }
@@ -229,6 +240,17 @@ tr.header {
     display:block;
 }
 
+.center {
+
+    text-align: center;
+    width: 100%;
+}
+
+.glyphicon-question-sign {
+    font-size: 14px;
+    color: grey;
+}
+
 #chart-number-total {
     float: left;
     width: 100%%;
@@ -264,9 +286,8 @@ tr.header {
 /*    font-family: 'georgia', serif!important;*/
     font-size: 22px;
     color: #54585A;
-    padding-left: 10px;
     text-transform: uppercase;
-    margin-bottom:-20px;
+/*    margin-bottom:-40px;*/
 }
 
 #chart-ring-budget {
@@ -316,9 +337,10 @@ g.tick {
 
 #chart-table-activity {
     height: 600px;
-    margin-top: 15px;
-    clear: both;
-    font-weight:lighter;
+    margin-top: 16px;
+    font-family: 'open sans', sans-serif;
+    font-size: 13px;
+/*    font-weight:lighter;*/
     overflow-y: scroll;
-    display:table;
+    display: table;
 }
