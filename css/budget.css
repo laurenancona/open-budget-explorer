@@ -1,9 +1,21 @@
-@import url('//fonts.googleapis.com/css?family=Montserrat:200,300,400,700|Open+Sans:400,700');
+@import url('//fonts.googleapis.com/css?family=Montserrat:200,300,400,700|Open+Sans:400,700|Open+Sans+Condensed:300,700');
 
 body {
 font-family: 'Montserrat', 'Open Sans', sans-serif;
 font-weight: normal;
 padding-top:80px;
+}
+p {
+    font-family: 'open sans', sans-serif;
+    color: #54585A;
+}
+
+.blue {
+    color: #008cba!important;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 .starter-template {             padding: 40px 15px;
@@ -73,17 +85,11 @@ padding-top:80px;
     /* border: 1px dotted #d9d9d6; */
 }
 
-.left {
-    float: left;
-    width: 43%;
-    margin-right: 1%;
-    /* border: 1px dotted #d9d9d6; */
-}
-.right {
-    float: right;
-    width: 54%;
-    margin-left: 2%;
-    /* border: 1px dotted #d9d9d6; */
+.three-col {
+       -moz-column-count: 3;
+       -moz-column-gap: 20px;
+       -webkit-column-count: 3;
+       -webkit-column-gap: 20px;
 }
 
 .btn-primary {
