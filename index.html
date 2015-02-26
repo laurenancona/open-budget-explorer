@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="City of Philadelphia | Data Services">
+    <title>City of Philadelphia | Budget Explorer</title>
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/yeti/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">-->
+
+    <link rel="stylesheet" type="text/css" href="css/dc.css"/>
+    <link rel="stylesheet" type="text/css" href="css/budget.css"/>
+<!--    <script src="js/d3.min.js" charset="utf-8"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.3/d3-tip.min.js"></script>-->
+
+    <!--[if IE]>
+        <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">City of Philadelphia</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+<!--                    <li><a href="#contact">Data Inventory</a></li>-->
+
+                </ul>
+            </div><!--.nav-collapse-->
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="budget-header">
+            <img src="img/new_city_logo_grey.png" alt="city logo" class="logo-img">
+            <p><span class="city-title">Open Budget  </span><span class="app-name">Explorer</span></p>
+<!--                <p class="lead">This little guy is just a test. Select a department to see how their budget breaks down.</p>-->
+        </div>
+        <div>
+<!--
+            <svg height="20" width="100%">
+                <line x1="100" y1="2" x2="100%" y2="2" style="stroke:#333;stroke-width:0.5" />
+                        Sorry, your browser does not support inline SVG.
+            </svg>
+-->
+        </div>
+
+<!--    BEGIN VISUALIZATION MAIN    -->
+        <div class="row" id="info">
+        <div id="data-count-top">
+            <span class="filter-count"></span> selected out of <span class="total-count"></span> records &nbsp;
+            <span id="reset-all">
+                <button type="button" class="btn btn-primary btn-xs"><a href="javascript:dc.filterAll();dc.redrawAll();">Reset Filters</a></button>
+            </span>
+        </div>
+            <div class="col-xs-12"><hr></div>
+            <div class="col-xs-4">
+                <div class="summary">
+<!--
+                    <svg height="10" width="100%">
+                        <line x1="0" y1="1" x2="100%" y2="1" style="stroke:#666;stroke-width:1" />
+                        Sorry, your browser does not support inline SVG.
+                    </svg>
+-->
+                    <div>
+                        <div id="chart-number-total">
+                            <span class="total-selected">Total Selected<hr></span>
+                            <span style="number-display"><br></span>
+                        </div>
+                        <div>
+                            <span class="">of</span><br>
+                            <span style class="budget-total">$7,186,474,597</span><br>
+<!--                            <span class="total-selected">total</span>-->
+                        </div>
+<!--
+                    <svg height="10" width="100%">
+                        <line x1="0" y1="10" x2="100%" y2="10" style="stroke:#666;stroke-width:1" />
+                        Sorry, your browser does not support inline SVG.
+                    </svg>
+-->
+                    </div>
+                </div>
+            </div>
+            <div id="ring-total" class="col-xs-4">
+                <section id="chart-ring-budget">
+                    <section id="total-percent">100%</section>
+                </section>
+                <p span id="comment">^ring will update to show % of whole</span></p>
+            </div>
+            <div class="col-xs-4">
+                <section class="dept-title" id="filters">Director of Finance</section>
+                <hr>
+                <p class="description">Overseeing the financial, accounting, and budgeting functions of the executive branch. <em>(this will update as dept is selected.)</em></p>
+
+            </div>
+        </div>
+        <div id="row-charts" class="row">
+            <div id="department" class="col-xs-4">
+                <section id="chart-row-dept">
+                    <p span class="section-title">Choose a Department</p>
+                    <hr>
+                </section>
+            </div>
+            <div id="funding" class="col-xs-4">
+                <section id="chart-row-fund">
+                    <p span class="section-title">View by Funding Source</p>
+                    <hr>
+                </section>
+            </div>
+            <div id="category" class="col-xs-4">
+                <section id="chart-bar-char">
+                    <p span class="section-title">Select a Category</p>
+                    <hr>
+                </section>
+            </div>
+        </div>
+     <!-- create a custom header -->
+         <div id="data-table" class="row">
+                <section id="data-count">
+                    <span class="filter-count"></span> selected out of </span>
+                    <span class="total-count"></span> records
+                </section>
+             <p span class="section-title">Sub-Category Items (determined by selections above):</p>
+             <hr>
+             <table class="table table-hover table-striped table-condensed" id="chart-table-activity">
+                <thead>
+                <tr class="header">
+                    <th>Department</th>
+                    <th>Activity</th>
+                    <th>Category</th>
+                    <th>Fund</th>
+                    <th>Budget</th>
+                </tr>
+                </thead>
+            </table>
+        <!-- data rows will fill in here -->
+        </div>
+    </div>
+    <script type="text/javascript" src="js/d3.js"></script>
+    <script type="text/javascript" src="js/crossfilter.js"></script>
+    <script type="text/javascript" src="js/dc.js"></script>
+
+    <script type="text/javascript">
+
+    // NAME OUR CHARTS
+        var dataCountTop    = dc.dataCount("#data-count-top"),
+            budgetRingChart = dc.pieChart("#chart-ring-budget"),
+            deptRowChart    = dc.rowChart("#chart-row-dept"),
+            dataCount       = dc.dataCount("#data-count"),
+            actTableChart   = dc.dataTable("#chart-table-activity"),
+            numberTotal     = dc.numberDisplay("#chart-number-total"),
+            charBarChart    = dc.rowChart("#chart-bar-char"),
+            fundRowChart    = dc.rowChart("#chart-row-fund");
+
+    // LOAD OUR DATA
+        // use static or load via d3.csv("spendData.csv", function(error, spendData) {/* do stuff */});
+
+        var myData = d3.csv('data/14budget.csv', function(budgetData){
+//            var numberFormat = d3.format(' ^$,.r');
+            console.log(budgetData);
+        // normalize/parse data
+    //        budgetData.forEach(function(d) {
+    //            d.Spent = d.Spent.match(/\d+/);
+    //        });
+
+    // SET CROSSFILTER
+        var ndx = crossfilter(budgetData),
+
+//            totalDim = ndx.dimension(function(d) {return d.total;}),
+            all                 = ndx.groupAll(),
+            sumAll              = ndx.groupAll().reduceSum(function(d) {return +d.budget}),
+
+//            FYDim             = ndx.dimension(function(d) {return +d.FY;}),
+            budgetDim           = ndx.dimension(function(d) {return Math.floor(d.budget/1000000);}),
+            deptDim             = ndx.dimension(function(d) {return d.Department_Title;}),
+            charDim             = ndx.dimension(function(d) {return d.Character_Title;}),
+            actDim              = ndx.dimension(function(d) {return d.SubObjTitle;}),
+            fundDim             = ndx.dimension(function(d) {return d.Fund_Title;}),
+
+//            spendPerFYDim     = FYDim.group().reduceSum(function(d) {return +d.budget;}),
+            totalBudget         = budgetDim.group().reduceSum(function(d) {return +d.budget}),
+            spendPerDeptDim     = deptDim.group().reduceSum(function(d) {return +d.budget;}),
+            spendPerCharDim     = charDim.group().reduceSum(function(d) {return +d.budget;}),
+            spendPerActDim      = actDim.group().reduceSum(function(d) {return +d.budget;}),
+            spendPerFundDim     = fundDim.group().reduceSum(function(d) {return +d.budget;});
+
+        var format = d3.format(' ^$,.0f');
+        var formatRight = d3.format(' >$,.0f');
+        var min                 = budgetDim.bottom(1)[0].budget,
+            max                 = budgetDim.top(1)[0].budget;
+            console.log(min);
+            console.log(max);
+
+
+
+            //TODO dynamic dept title renderal
+            //TODO calc % YoY change
+            numberTotal
+                .formatNumber(d3.format(" ^$,.r"))
+                .valueAccessor(function(d) {return sumAll.value();})
+                .group(spendPerDeptDim);
+//                .renderlet(function(chart){
+//                    if (deptRowChart.filters().length) {
+//                        $("#filters").text(deptRowChart.filters()[0]);
+//                    }
+//                });
+
+            budgetRingChart
+                .width(200).height(200)
+                .dimension(fundDim)
+                .group(spendPerFundDim)
+                .colors(['#A8BF12'])
+                .renderLabel(false)
+                .innerRadius(70);
+
+            deptRowChart
+                .width(370).height(900)
+                .dimension(deptDim)
+                .colors(['#008cba'])
+//                .x(d3.scale.log())
+//                    .base(2)
+//                    .domain([62000, 1600000000])
+//                    .range([0, 10000])
+                .group(spendPerDeptDim)
+                .margins({top: 0, right: 20, bottom: 20, left: 0})
+//                .renderVerticalGridLines([false]) <--broken method v1.7.3
+                .ordering(function(d) { return -d.value; }) //this was buried in docs, not in API reference for v1.7.0, submitted PR
+                .gap(3)
+                .labelOffsetX([3])
+                .labelOffsetY([12]);
+
+            charBarChart
+                .width(380).height(450)
+                .dimension(charDim)
+                .group(spendPerCharDim)
+                .colors(['#008cba'])
+                .ordering(function(d) { return -d.value; })
+                .labelOffsetX([2])
+                .labelOffsetY([35])
+                .margins({top: 0, right: 0, bottom: 0, left: 0})
+                .gap(3);
+
+            fundRowChart
+                .width(380).height(450)
+                .dimension(fundDim)
+                .group(spendPerFundDim)
+                .colors(['#008cba'])
+                .ordering(function(d) { return -d.value; })
+//                .xUnits(dc.units.ordinal)
+//                .x(d3.scale.ordinal())
+////                .y(d3.scale.linear().domain([0, myData.length + 1]))
+                .elasticX(true)
+                .labelOffsetX([2])
+                .labelOffsetY([21])
+                .margins({top: 0, right: 20, bottom: 0, left: 0})
+                .gap(1);
+
+            dataCount
+                .dimension(ndx) // set dimension to all data
+                .group(all); // set group to ndx.groupAll()
+
+            dataCountTop
+                .dimension(ndx) // set dimension to all data
+                .group(all); // set group to ndx.groupAll()
+
+            actTableChart
+                .dimension(budgetDim)
+                .group(function(d) { return null; })
+                .size(12)
+                .columns([
+                    function(d) { return d.Department_Title;},
+                    function(d) { return d.Fund_Title; },
+                    function(d) { return d.Character_Title; },
+                    function(d) { return d.SubObjTitle; },
+                    function(d) { return formatRight(d.budget); }
+                        ])
+                .sortBy(function(d) {
+                        return d.Department_Title;
+                    })
+                .order(d3.ascending);
+            dc.renderAll();
+        });
+
+    </script>
+</body>
