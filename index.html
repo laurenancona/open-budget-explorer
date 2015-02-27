@@ -55,9 +55,12 @@
 
 <!--    BEGIN VISUALIZATION MAIN    -->
         <div class="row" id="info">
-        <div id="data-count-top">
-            <span class="filter-count"></span> selected out of <span class="total-count"></span> records &nbsp;
-        </div>
+            <div id="data-count-top">
+                <span class="filter-count"></span> selected out of <span class="total-count"></span> records &nbsp;
+                <span id="reset-all">
+                    <button type="button" class="btn btn-primary btn-xs"><a href="javascript:dc.filterAll();dc.redrawAll();">Reset Filters</a></button>
+                </span>
+            </div>
             <div class="col-xs-12"><hr></div>
             <div class="col-xs-4">
                 <div class="dept-title">Total Selected<hr>
@@ -271,3 +274,4 @@
         });
     </script>
 </body>
+</html>
