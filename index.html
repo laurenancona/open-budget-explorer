@@ -21,6 +21,8 @@
     <!--[if IE]>
         <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.min.js"></script>
     <![endif]-->
 </head>
 
@@ -63,8 +65,8 @@
             </div>
             <div class="col-xs-12"><hr></div>
             <div class="col-xs-4">
-                <div class="dept-title">Total Selected<hr>
-                </div>
+                <div class="total-selected">Total Selected
+                </div><hr>
                 <div style="text-align: center;">
                     <div id="chart-number-total">
                         <span style="number-display"></span>
@@ -80,7 +82,7 @@
                 <section id="chart-ring-budget">
                     <section id="total-percent">100%</section>
                 </section>
-                <p span id="comment">^ring will update to show % of whole</span></p>
+                <p id="comment">^ring will update to show % of whole</p>
             </div>
             <div class="col-xs-4">
                 <section class="dept-title" id="filters">Director of Finance</section>
@@ -111,7 +113,7 @@
      <!-- create a custom header -->
         <div id="data-table" class="row">
             <section id="data-count">
-                <span class="filter-count"></span> selected out of </span>
+                <span class="filter-count"></span> selected out of
                 <span class="total-count"></span> records
             </section>
             <p span class="section-title">Sub-Category Items (determined by selections above):</p>
@@ -206,7 +208,7 @@
                 .innerRadius(70);
 
             deptRowChart
-                .width(340).height(900)
+                .width(340).height(1100)
                 .dimension(deptDim)
                 .colors(['#008cba'])
 //                .x(d3.scale.log())
@@ -218,19 +220,8 @@
 //                .renderVerticalGridLines([false]) <--broken method v1.7.3
                 .ordering(function(d) { return -d.value; }) //this was buried in docs, not in API reference for v1.7.0, submitted PR
                 .gap(3)
-                .labelOffsetX([3])
-                .labelOffsetY([12]);
-
-            charBarChart
-                .width(340).height(450)
-                .dimension(charDim)
-                .group(spendPerCharDim)
-                .colors(['#008cba'])
-                .ordering(function(d) { return -d.value; })
-                .labelOffsetX([2])
-                .labelOffsetY([35])
-                .margins({top: 0, right: 0, bottom: 0, left: 0})
-                .gap(3);
+                .labelOffsetX([5])
+                .labelOffsetY([13]);
 
             fundRowChart
                 .width(340).height(450)
@@ -242,10 +233,21 @@
 //                .x(d3.scale.ordinal())
 ////                .y(d3.scale.linear().domain([0, myData.length + 1]))
                 .elasticX(true)
-                .labelOffsetX([2])
-                .labelOffsetY([21])
+                .labelOffsetX([5])
+                .labelOffsetY([20])
                 .margins({top: 0, right: 20, bottom: 0, left: 0})
-                .gap(1);
+                .gap(3);
+
+            charBarChart
+                .width(340).height(450)
+                .dimension(charDim)
+                .group(spendPerCharDim)
+                .colors(['#008cba'])
+                .ordering(function(d) { return -d.value; })
+                .labelOffsetX([5])
+                .labelOffsetY([35])
+                .margins({top: 0, right: 0, bottom: 0, left: 0})
+                .gap(3);
 
             dataCount
                 .dimension(ndx) // set dimension to all data
